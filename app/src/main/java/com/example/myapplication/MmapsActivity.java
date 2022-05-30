@@ -2,15 +2,19 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import static android.Manifest.permission.CALL_PHONE;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +44,7 @@ import dev.shreyaspatil.easyupipayment.EasyUpiPayment;
 import dev.shreyaspatil.easyupipayment.exception.AppNotFoundException;
 
 public class MmapsActivity extends FragmentActivity implements OnMapReadyCallback ,TaskLoadedCallback, PaymentResultListener {
+
     GoogleMap mMap;
     ActivityMapsBinding binding;
     ArrayList<LatLng> latLngs =new ArrayList<LatLng>();
@@ -57,6 +62,7 @@ public class MmapsActivity extends FragmentActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         book = findViewById(R.id.book);
+        call = findViewById(R.id.call);
         // set pay Api
         book.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +70,7 @@ public class MmapsActivity extends FragmentActivity implements OnMapReadyCallbac
                 Checkout checkout = new Checkout();
                 checkout.setKeyID("rzp_test_cW5DCM39mcnXBu");
                 JSONObject object = new JSONObject();
-                //bill information,did not store in the database so use default
+                //bill information,did not store in the database so use the default information
                 try {
                     object.put("name","Vincent");
                     object.put("description","Test Payment");
@@ -81,15 +87,20 @@ public class MmapsActivity extends FragmentActivity implements OnMapReadyCallbac
             }
         });
 
-        call = findViewById(R.id.call);
+
         call.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
                 String phone = "1888266322";
                 String s = "tel:" + phone;
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(s));
-                startActivity(intent);
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    startActivity(intent);
+                } else {
+                    requestPermissions(new String[]{CALL_PHONE}, 1);
+                }
 
             }
         });
