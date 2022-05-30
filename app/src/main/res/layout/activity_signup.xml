@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:accessibilityLiveRegion="none"
+    android:background="@color/quantum_pink100"
     tools:context=".MainActivity">
 
 

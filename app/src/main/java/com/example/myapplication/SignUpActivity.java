@@ -54,6 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+        //insert user data
 
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +117,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     })
 ;}
+
+    //chose image
 
     private void pickImage() {
 

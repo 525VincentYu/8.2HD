@@ -16,7 +16,7 @@ public class Database1 extends SQLiteOpenHelper {
     public static final String COLUM_PASSWORD = "password";
     public static final String COLUM_FULLNAME = "fullname";
     public static final String COLUM_PHONENUMBER = "phonenumber";
-
+//set up Login Database
    public Database1(Context context) {
        super(context, "Login.db", null,1);
 
@@ -42,7 +42,7 @@ public class Database1 extends SQLiteOpenHelper {
 
     }
 
-
+//insert user information
     public Boolean insertData(  String username, String password, String fullname, String phonenumber)
     {
 
@@ -74,6 +74,7 @@ public class Database1 extends SQLiteOpenHelper {
             return true;
     }
 
+    //check identity
     public Boolean checkusername(String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from user where username = ? " , new String[] {username});

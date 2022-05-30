@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,20 +17,28 @@ public class MyorderActivity extends neworder2Activity implements PopupMenu.OnMe
 
     RecyclerView recyclerView;
     ImageButton addOrder,menu;
-    Database2 DB;
-    ArrayList<Db2ModelClass> db2ModelClassesArrayList;
+    Database4 DB;
+    //ArrayList<Db2ModelClass> db2ModelClassesArrayList;
+    private MyAdapter2.RecyclerViewClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorder);
-        DB =new Database2(this);
+        DB =new Database4(this);
         fullorder=DB.getAlldata1();
+
+        //get item click position
+        //when click complete the feedbakc button is enabled
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             int value = extras.getInt("key");
+            int Enabled = extras.getInt("key1");
             if(value ==1 ){
                 order.add(fullorder.get(1));
+            }
+            if(Enabled == 1){
+                Toast.makeText(this,"you have not completed the order", Toast.LENGTH_SHORT).show();
             }
             //The key argument here must match that used in the other activity
         }
@@ -47,7 +56,22 @@ public class MyorderActivity extends neworder2Activity implements PopupMenu.OnMe
 
 
         //order.add(fullorder.get(1));
-        MyAdapter2 myAdapter = new MyAdapter2(this,fullorder);
+        MyAdapter2 myAdapter = new MyAdapter2(this,fullorder,listener);
+
+        listener = new MyAdapter2.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(MyorderActivity.this, "Test", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),OrderdetailsActivity.class);
+                intent.putExtra("key",fullorder.get(position));
+                startActivity(intent);
+
+
+            }
+        };
+
+
+
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);

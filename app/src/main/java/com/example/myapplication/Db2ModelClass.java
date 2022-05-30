@@ -3,7 +3,7 @@ package com.example.myapplication;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
-
+//  database order class type
 public class Db2ModelClass implements Serializable {
     Bitmap image;
     String name;

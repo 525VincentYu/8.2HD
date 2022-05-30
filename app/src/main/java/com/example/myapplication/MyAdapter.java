@@ -28,7 +28,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.itemtruck, null);
+        View view = View.inflate(parent.getContext(), R.layout.itemtruck1, null);
         MyAdapter.MyViewHolder myViewHoder = new MyAdapter.MyViewHolder(view);
         return myViewHoder;
     }
@@ -39,6 +39,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
        holder.imageButton.setImageBitmap(db2ModelClass.getImage());
        holder.name.setText(db2ModelClass.getName());
        holder.discription.setText(db2ModelClass.getDiscription());
+
+       //share button item click
+
        holder.imageButton2.setOnClickListener((view)-> {
             {
                String title1 = db2ModelClass.getName();

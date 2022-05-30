@@ -5,6 +5,7 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 
 import java.io.Serializable;
+//class for temporarily store order information
 
 public class Neworder   {
     String Reciver;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
@@ -17,15 +18,16 @@ public class HomeActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     ImageButton menu;
     ImageButton addOrder;
+    Button cla;
     Database2 DB;
     RecyclerView recyclerView;
-    //MyAdapter myAdapter;
+
     ArrayList<Db2ModelClass> db2ModelClassesArrayList;
 
 
 
 
-    //int [] imageList = {R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.d};
+
 
 
 
@@ -64,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
         menu = findViewById(R.id.menubtn1);
-
+        cla = findViewById(R.id.classi);
         addOrder = findViewById(R.id.addOrderbtn1);
 
         recyclerView = findViewById(R.id.re);
@@ -73,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
-
+ //turn to add order page
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +83,16 @@ public class HomeActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Intent intent = new Intent(getApplicationContext(),neworderActivity.class);
                 startActivity(intent);
 
+
+            }
+        });
+//turn to item classification page
+        cla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(),ImageActivity.class);
+                startActivity(intent);
 
             }
         });
