@@ -44,14 +44,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
             ((TextView)findViewById(R.id.txtValues)).setText("Vaules: "+ sensorEvent.values[0]);
-            if(sensorEvent.values[0]>10000){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-            }
-            else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-            }
         }
 
     }

@@ -29,8 +29,9 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements SensorEventListener {
     EditText username, password;
-    Button btnLoign, btnSignUp;
+    Button btnLoign, btnSignUp,btnSensor;
     Database1 DB;
+    Database database;
     public String user;
     public ArrayList<Db2ModelClass> order;
     public ArrayList<Neworder> neworders;
@@ -60,7 +61,17 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
         password.setTransformationMethod(PasswordTransformationMethod.getInstance());
         btnLoign = (Button) findViewById(R.id.buttonLogin);
         btnSignUp = (Button) findViewById(R.id.buttonSignUp);
+        btnSensor = (Button)findViewById(R.id.sensor);
         DB = new Database1(this);
+        database = new Database(this);
+        btnSensor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),SensorActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         //define sensor manager
@@ -143,10 +154,25 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
 
+            if(sensorEvent.values[0]>0){
+                Boolean insert = database.insertData(Float.valueOf(sensorEvent.values[0]));
+                if(insert == true){
+                    Toast.makeText(LoginActivity.this, "Light_value store successfully", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(LoginActivity.this,"Light_value storeP failed", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+            else {
+
+            }
+
+
             //when light sensor value more than 10000, turn to night mode
             if(sensorEvent.values[0]>10000){
                 btnLoign.setBackground(getResources().getDrawable(R.drawable.button_border1));
                 btnSignUp.setBackground(getResources().getDrawable(R.drawable.button_border1));
+                btnSensor.setBackground(getResources().getDrawable(R.drawable.button_border1));
                 logo.setImageResource(R.drawable.logo1);
                 layout.setBackgroundDrawable(getResources().getDrawable(R.drawable.bkcolor));
 
@@ -154,6 +180,7 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
             else {
                 btnLoign.setBackground(getResources().getDrawable(R.drawable.button_border));
                 btnSignUp.setBackground(getResources().getDrawable(R.drawable.button_border));
+                btnSensor.setBackground(getResources().getDrawable(R.drawable.button_border));
                 logo.setImageResource(R.drawable.logo);
                 layout.setBackgroundDrawable(getResources().getDrawable(R.drawable.bkcolor1));
 
